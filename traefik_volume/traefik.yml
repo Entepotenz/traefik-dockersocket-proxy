@@ -1,0 +1,15 @@
+# traefik.yml
+
+# ...
+# other configurations
+# ...
+
+providers:
+  docker:
+    exposedByDefault: false
+    network: traefik
+    endpoint: "tcp://dockerproxy:2375"
+
+# ...
+# other configurations
+# ...
