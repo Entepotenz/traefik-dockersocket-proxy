@@ -10,6 +10,9 @@ If you are looking for more full fledged solution you should checkout this proje
 # HowTo
 1. execute `build-env.sh` to generate the `.env`
     - this is necessary to get the valid user GROUPID for haproxy (checkout this section [Why are you overwriting the user group of haproxy?](#Why-are-you-overwriting-the-user-group-of-haproxy))
+2. execute `docker-compose up`
+3. send HTTP GET request fo `whoami.localhost`
+    - if you do not get a HTTP 404 then everything is working :-)
 
 ## HowTo debug
 For each request haproxy writes a log line.
@@ -19,7 +22,7 @@ You can get the log by issuing this command: `docker-compose logs dockerproxy`
 # My reasons why I prefer this solution over [tecnativa/docker-socket-proxy](https://github.com/Tecnativa/docker-socket-proxy) (depending on your use case you might come to a different perfectly valid conclusion)
 - simple solution -> less code -> less complexity -> less things to break
 - use most recent lts version of haproxy (less maintenance)
-    - At the time of writing tecnativa/docker-socket-proxy uses `haproxy:2.2-alpine`
+    - At the time of writing `tecnativa/docker-socket-proxy` uses `haproxy:2.2-alpine`
 
 # Technical description
 ## What is the dockersocket?
