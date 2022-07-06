@@ -31,7 +31,7 @@ services:
       - "traefik.http.routers.whoami.rule=Host(`whoami.localhost`)"
       - "traefik.http.routers.whoami.entrypoints=web"
     networks:
-      - webservers
+      webservers:
 
 networks:
   traefik:
