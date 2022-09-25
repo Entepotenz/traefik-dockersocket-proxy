@@ -1,0 +1,38 @@
+version: '3.7'
+services:
+  traefik:
+    image: 'traefik:latest'
+    restart: 'unless-stopped'
+    depends_on:
+      - dockerproxy
+    ports:
+      - '80:80'
+    volumes:
+      - "$PWD/traefik_volume/traefik.yml:/etc/traefik/traefik.yml:ro"
+    networks:
+      traefik:
+      webservers:
+
+  dockerproxy:
+    image: haproxy:lts-alpine
+    restart: unless-stopped
+    user: "haproxy:${PGID_DOCKER_SOCKET}"
+    volumes:
+      - '/var/run/docker.sock:/var/run/docker.sock:ro'
+      - "$PWD/haproxy_volume/haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg:ro"
+    networks:
+      traefik:
+  
+  whoami:
+    image: "traefik/whoami"
+    container_name: "simple-service"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.whoami.rule=Host(`whoami.localhost`)"
+      - "traefik.http.routers.whoami.entrypoints=web"
+    networks:
+      webservers:
+
+networks:
+  traefik:
+  webservers:

@@ -1,0 +1,21 @@
+# traefik.yml
+
+# ...
+# other configurations
+# ...
+
+entryPoints:
+  web:
+    address: ":80"
+
+providers:
+  docker:
+    exposedByDefault: false
+    # this is to select the docker internal network which is used to connect to the webservers we are acting as reverse proxy for
+    # format: `${PROJECT-NAME}_${DOCKER-COMPOSE-NETWORK-LABEL-NAME}`
+    network: traefik-dockersocket-proxy_webservers
+    endpoint: "tcp://dockerproxy:2375"
+
+# ...
+# other configurations
+# ...
